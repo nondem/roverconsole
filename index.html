@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Rover Control Console</title>
+<link rel="stylesheet" type="text/css" href="index.css" />
+</head>
+<body>
+<center>
+<table style="width:80%">
+<tr>
+<!--Cell 1 Start-->
+      <td>
+                   
+     </td>  
+<!--Cell 1 End-->
+
+<!--Cell 2 Start-->
+     <td><center>Messages<br> <textarea id="tbx_messages" rows="6" cols="80" style="color: lightgreen; background-color: black; border-style: inset; border-width: 5px;" > System Offline </textarea></center></td> 
+<!--Cell 2 End-->
+
+<!--Cell 3 Start-->
+<td>
+       
+         Temperature:<br><input type = "text" id = "temp"  value = "no signal" maxlength="4" size="4"/><br>
+	Atmospheric Pressure:<br><input type = "text" id = "pressure"  value = "no signal" maxlength="4" size="4"/><br>
+	Available Light:<br><input type = "text" id = "lumens"  value = "no signal" maxlength="4" size="4"/><br>
+</td>
+<!--Cell 3 End-->
+
+</tr> 
+
+<tr>
+<!--Cell 4 Start-->
+<td><center>
+	GyroCompass<br><img src="compass.png" id="himage"><br>
+	
+	Incline(Y):<br><input type = "text" id = "yaxis"  value = "no signal" maxlength="4" size="4" /><br>
+	<img src="yaxis.png" id="yimage"><br>
+	Roll(X):<br><input type = "text" id = "xaxis"  value = "no signal" maxlength="4" size="4"/><br>
+	<img src="xaxis.png" id="ximage">
+</center>
+</td>
+<!--Cell 4 End-->
+
+<!--Cell 5 Start-->
+<td>
+<center><img src="camfeed.jpg" id="camimage"></center>
+</td> 
+<!--Cell 5 End-->
+
+<!--Cell 6 Start-->
+<td><center>
+         <table >    <center>       
+               <tr><td>Master Alarm</td><td><svg id="svgacharging" width="50" height="50"><circle cx="25" cy="25" r="10" stroke="red" stroke-width="4" fill="black" /></svg></td></tr>
+               <tr><td>Overcurrent</td><td><svg id="svgalive" width="50" height="50"><circle cx="25" cy="25" r="10" stroke="red" stroke-width="4" fill="black" /></td></tr>
+               <tr><td>Humidity</td><td><svg id="svgalive" width="50" height="50"><circle cx="25" cy="25" r="10" stroke="red" stroke-width="4" fill="black" /></td></tr>
+               <tr><td>Tilt/Roll</td><td><svg id="svgalive" width="50" height="50"><circle cx="25" cy="25" r="10" stroke="red" stroke-width="4" fill="black" /></td></tr>             
+               <tr><td>Low Voltage:</td><td><svg id="svgalive" width="50" height="50"><circle cx="25" cy="25" r="10" stroke="red" stroke-width="4" fill="black" /></td></tr>
+	       <tr><td>Charge Status</td><td><svg id="svgacharging" width="50" height="50"><circle cx="25" cy="25" r="10" stroke="green" stroke-width="4" fill="black" /></svg></td></tr>
+	       <tr><td>CPU Active:</td><td><svg id="svgalive" width="50" height="50"><circle cx="25" cy="25" r="10" stroke="green" stroke-width="4" fill="black" /></td></tr>
+               <tr><td>Sensor Array Active:</td><td><svg id="svgalive" width="50" height="50"><circle cx="25" cy="25" r="10" stroke="green" stroke-width="4" fill="black" /></td></tr></center>
+        </table>
+<br>Battery Voltage:<br><input type = "text" id = "voltage"  value = "no signal" maxlength="4" size="4"/><br>Current Drain:<br><input type = "text" id = "Current" value = "no signal" maxlength="4" size="4" />
+</center>
+</td>
+<!--Cell 6 End-->
+  </tr>
+<!--Cell 7 Start-->
+<tr>
+<td>
+
+	GPS Location(WGS84 Datum)<br>Latitude:
+	<input type = "text" id = "gpslat"  value = "no signal" maxlength="10" size="10"/><br>
+	Longitude:<input type = "text" id = "gpslong"  value = "no signal" maxlength="10" size="10"/><br>
+	Accuracy:<input type = "text" id = "gpsaccuracy" value = "no signal" maxlength="10" size="10"/><br>
+
+</td>
+<!--Cell 7 End-->
+
+<!--Cell 8 Start-->
+<td>
+<center>
+	<table>
+		<tr><td></td><td><button type="button" onclick="forward()">FORWARD</button></center></td><td></td><td><input type="radio" name="Sensor" value="male"> Sensor Array Power<br></td>
+		</tr>
+		<tr>	<td><button type="button" onclick="left()">LEFT</button></center></td>
+			<td><br><br><input type="range" min="0" max="10" value="0" id="rng_distance" step="1" onchange="updaterangevalue()"  list="distances" ><br>
+			<input type="text" id="tbx_distance" value="0" maxlength="1" size="1" ></label><br>
+<datalist id="distances">
+	<option>0</option>
+	<option>1</option>
+	<option>2</option>
+	<option>3</option>
+	<option>4</option>
+	<option>5</option>
+	<option>6</option>
+	<option>7</option>
+	<option>8</option>
+	<option>9</option>
+	<option>10</option>	
+</datalist>
+</td></center>
+			<td><button type="button" onclick="right()">RIGHT</button></center></td><td><input type="radio" name="rdo_EnableDrive" onclick="EnableDrive()"> Drive Motors Enable<br></td>
+		</tr>
+<tr><td></td><td><button type="button" onclick="reverse()">REVERSE</button></center></center></td><td></td><td><input type="radio" name="Autonomous Mode" value="other"> Autonomous Mode<br></td>
+		</tr>
+		
+		
+	</table>
+
+
+  
+  
+
+
+
+	
+</td> 
+<!--Cell 8 End-->
+
+<!--Cell 9 Start-->
+<td>
+	<center>Command String<br>
+	<input type = "text" id = "Command2Send"  value = "" />
+      	<br><button type="button" onclick="transmitcommand()">Transmit Command</button></center>
+</td>
+<!--Cell 9 End-->
+</tr>
+  
+</table>
+</center>
+
+<script src="jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="jQueryRotate.js"></script>
+<script src="drive.js"></script>
+<script src="sensors.js"></script>
+<script src="alerts.js"></script>
+</body>
+</html>
